@@ -36,5 +36,5 @@ public class BookHistoryController {
         AuditEnversInfo auditEnversInfo = metadata.getDelegate();
         return auditEnversInfo.getUsername();
     }
-    
+
 }
