@@ -3,7 +3,6 @@ package com.envers.enversteste.controller;
 import com.envers.enversteste.envers.AuditEnversInfo;
 import com.envers.enversteste.model.Book;
 import com.envers.enversteste.repository.BookRevisionRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.data.history.Revision;
 import org.springframework.data.history.RevisionMetadata;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/book-history")
-@AllArgsConstructor
+@RequestMapping("/api/v1/books-history")
 public class BookHistoryController {
 
     private final BookRevisionRepository bookRevisionRepository;
+
+    public BookHistoryController(BookRevisionRepository bookRevisionRepository) {
+        this.bookRevisionRepository = bookRevisionRepository;
+    }
 
     @GetMapping("/revisions/{id}")
     public List<Book> getBookRevisions(@PathVariable Long id) {
