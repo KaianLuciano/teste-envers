@@ -2,10 +2,7 @@ package com.envers.enversteste.controller;
 
 import com.envers.enversteste.model.Book;
 import com.envers.enversteste.repository.BookRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/books")
@@ -22,6 +19,17 @@ public class BookController {
         if(book.getId() != null) {
             throw new IllegalArgumentException("The ID will be set by the database!");
         }
+        return bookRepository.save(book);
+    }
+
+    @PatchMapping
+    public Book modifyBook(@RequestBody Book request) {
+        if(request.getId() == null) {
+            throw new IllegalArgumentException("The ID value must be set!");
+        }
+        Book book = bookRepository.findById(request.getId()).orElseThrow();
+        if(request.getTitle() != null) book.setTitle(request.getTitle());
+        if(request.getAuthor() != null) book.setAuthor(request.getTitle());
         return bookRepository.save(book);
     }
 
